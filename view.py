@@ -53,3 +53,5 @@ class MainWindow(QMainWindow):
 
         sidebar_layout.addStretch()
         layout_principal.addWidget(sidebar, stretch=1)
+        
+**test**
