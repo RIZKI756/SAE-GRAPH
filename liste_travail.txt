@@ -1,0 +1,32 @@
+========================================================================
+SAÉ GRAPHES-IHM - SUIVI DES TÂCHES DU GROUPE (Backlog avant Trello)
+========================================================================
+
+[A FAIRE / BACKLOG GENERAL]
+- [ ] Mettre en place la structure Git et inviter tout le monde
+- [ ] Lire les spécifications du fichier JSON fournies dans le sujet
+- [ ] Trouver une astuce pour l'affichage des couleurs des motifs (éviter les doublons de couleur côte à côte)
+- [ ] Gérer les cas particuliers des grilles (ex: grille6.json qui bloque)
+- [ ] Implémenter le chronomètre en bonus (décompte du temps de jeu)
+- [ ] Ajouter une option "Indice" pour aider le joueur sans donner toute la solution d'un coup
+- [ ] Appliquer un thème sombre (CSS / QStyleSheet) pour que l'IHM soit plus moderne
+
+------------------------------------------------------------------------
+
+[EN COURS / EN DEVELOPPEMENT]
+- Toi : Écriture des classes Case et Motif dans model.py (init des structures)
+- Tom : Création de la fenêtre principale MainWindow vide et du menu supérieur
+- Gabriel : Réflexion sur la classe GameController pour lier la vue et les données
+
+------------------------------------------------------------------------
+
+[A VALIDER / TESTS]
+- [ ] Tester si le chargement d'un fichier JSON brut fonctionne sans faire planter l'application
+- [ ] Vérifier que les dimensions (largeur/hauteur) sont bien lues dynamiquement depuis le JSON
+
+------------------------------------------------------------------------
+
+[TERMINÉ / VALIDÉ]
+- [x] Analyse collective du sujet de la SAÉ et répartition des rôles principaux
+- [x] Choix de la bibliothèque graphique : PyQt6
+- [x] Création du dépôt Git local
