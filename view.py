@@ -96,4 +96,3 @@ class MainWindow(QMainWindow):
 
         self.grid_widget = GridWidget()
         layout_principal.addWidget(self.grid_widget, stretch=3)
-... (26lignes restantes)
