@@ -31,8 +31,6 @@ class GridWidget(QWidget):
     def attribuer_couleurs_motifs(self):
         self.couleurs_motifs = {}
         for i, motif in enumerate(self.grille.motifs):
-            # !!! COUAC DE DEV : On stocke l'objet QColor directement dans le dict.
-            # Cela va faire crasher l'appli plus tard (TypeError: unhashable type: 'QColor')
             self.couleurs_motifs[motif.id] = COULEURS_PASTELS[i % len(COULEURS_PASTELS)]
 
     def paintEvent(self, event):
