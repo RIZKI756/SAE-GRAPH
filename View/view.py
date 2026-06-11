@@ -97,3 +97,32 @@ class MainWindow(QMainWindow):
         widget_central = QWidget()
         self.setCentralWidget(widget_central)
         layout_principal = QHBoxLayout(widget_central)
+
+        self.grid_widget = GridWidget()
+        layout_principal.addWidget(self.grid_widget, stretch=3)
+
+        line = QFrame()
+        line.setFrameShape(QFrame.Shape.VLine)
+        layout_principal.addWidget(line)
+
+        sidebar = QWidget()
+        sidebar_layout = QVBoxLayout(sidebar)
+
+        title_label = QLabel("NÉONAURE")
+        title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        sidebar_layout.addWidget(title_label)
+
+        self.level_label = QLabel("📄 Grille non chargée")
+        sidebar_layout.addWidget(self.level_label)
+
+        self.btn_charger = QPushButton("Charger une Grille")
+        sidebar_layout.addWidget(self.btn_charger)
+
+        self.btn_verifier = QPushButton("Vérifier la Grille")
+        sidebar_layout.addWidget(self.btn_verifier)
+
+        self.btn_resoudre = QPushButton("Résoudre Automatiquement")
+        sidebar_layout.addWidget(self.btn_resoudre)
+
+        sidebar_layout.addStretch()
+        layout_principal.addWidget(sidebar, stretch=1)
