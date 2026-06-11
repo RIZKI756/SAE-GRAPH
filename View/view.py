@@ -3,7 +3,6 @@ from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPus
 from PyQt6.QtGui import QPainter, QColor, QFont, QPen
 from PyQt6.QtCore import Qt, pyqtSignal
 
-# Liste de couleurs pastels pour distinguer les zones
 COULEURS_PASTELS = [
     QColor("#ffb8b8"), QColor("#ffd3b6"), QColor("#dff9fb"),
     QColor("#c7ecee"), QColor("#e0ccc2"), QColor("#ffcccc")
@@ -17,7 +16,7 @@ class GridWidget(QWidget):
         super().__init__(parent)
         self.grille = None
         self.selection = None
-        self.couleurs_motifs = {}
+        self.couleurs_motifs = {} 
         self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.setMinimumSize(400, 400)
 
@@ -31,7 +30,8 @@ class GridWidget(QWidget):
     def attribuer_couleurs_motifs(self):
         self.couleurs_motifs = {}
         for i, motif in enumerate(self.grille.motifs):
-            self.couleurs_motifs[motif.id] = COULEURS_PASTELS[i % len(COULEURS_PASTELS)]
+            # FIX: utilisation index (int) pour eviter crash dict hashable
+            self.couleurs_motifs[motif.id] = i % len(COULEURS_PASTELS)
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -39,22 +39,26 @@ class GridWidget(QWidget):
             painter.fillRect(self.rect(), QColor("#dcdde1"))
             return
 
-        # Calcul automatique de la taille des cellules pour que ça rentre dans la fenêtre
+        # scaling cellules
         taille_cellule = min(self.width() // self.grille.largeur, self.height() // self.grille.hauteur)
 
-        # Dessin du fond des cases avec leurs couleurs de motif
         for (c, r), case in self.grille.cases.items():
             rect = Qt.QtCore.QRect(c * taille_cellule, r * taille_cellule, taille_cellule, taille_cellule)
             
-            # On pioche la couleur associée au motif (déclenche le bug ou l'affichage bizarre selon l'utilisation)
-            couleur_fond = self.couleurs_motifs.get(case.motif.id, QColor("#ffffff"))
+            idx_couleur = self.couleurs_motifs.get(case.motif.id, 0)
+            couleur_fond = COULEURS_PASTELS[idx_couleur]
+            
+            # focus visuel selection
+            if self.selection == (c, r):
+                couleur_fond = couleur_fond.darker(110)
+                
             painter.fillRect(rect, couleur_fond)
 
-            # Dessin des bordures fines par défaut
+            # grid lines
             painter.setPen(QPen(QColor("#7f8c8d"), 1))
             painter.drawRect(rect)
 
-            # Dessin du texte/chiffre
+            # render chiffres
             if case.valeur != 0:
                 painter.setPen(QColor("#2c3e50"))
                 painter.setFont(QFont("Segoe UI", 16, QFont.Weight.Bold if case.est_initiale else QFont.Weight.Normal))
@@ -93,6 +97,3 @@ class MainWindow(QMainWindow):
         widget_central = QWidget()
         self.setCentralWidget(widget_central)
         layout_principal = QHBoxLayout(widget_central)
-
-        self.grid_widget = GridWidget()
-        layout_principal.addWidget(self.grid_widget, stretch=3)
