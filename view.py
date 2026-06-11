@@ -30,10 +30,9 @@ class GridWidget(QWidget):
     def attribuer_couleurs_motifs(self):
         self.couleurs_motifs = {}
         for i, motif in enumerate(self.grille.motifs):
-<<<<<<< HEAD:view.py
-            # FIX: utilisation index (int) pour eviter crash dict hashable
-=======
->>>>>>> f92f241406a3752bc042ef11fc7622fa9f3e374e:View/view.py
+            self.couleurs_motifs[motif.id] = i % len(COULEURS_PASTELS)
+
+
             self.couleurs_motifs[motif.id] = i % len(COULEURS_PASTELS)
 
     def paintEvent(self, event):
