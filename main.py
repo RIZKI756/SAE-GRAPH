@@ -1,8 +1,12 @@
 import sys
 from PyQt6.QtWidgets import QApplication
+<<<<<<< HEAD
 from model import Grille
 from view import MainWindow
 from controller import GameController
+=======
+from View.view import MainWindow
+>>>>>>> f92f241406a3752bc042ef11fc7622fa9f3e374e
 
 def main():
     app = QApplication(sys.argv)
