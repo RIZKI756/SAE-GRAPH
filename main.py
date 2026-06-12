@@ -18,17 +18,27 @@ def main():
     
     # Chargement d'une grille par défaut au démarrage
     chemin_courant = os.path.dirname(os.path.abspath(__file__))
-    grille_defaut = os.path.join(chemin_courant, "grille", "grille7.json")
+    fichier_derniere_partie = os.path.join(chemin_courant, "derniere_partie.txt")
     
-    if os.path.exists(grille_defaut):
-        succes = model.charger_json(grille_defaut)
+    grille_a_charger = None
+    if os.path.exists(fichier_derniere_partie):
+        with open(fichier_derniere_partie, 'r', encoding='utf-8') as f:
+            chemin = f.read().strip()
+        if os.path.exists(chemin):
+            grille_a_charger = chemin
+
+    if not grille_a_charger:
+        grille_a_charger = os.path.join(chemin_courant, "grille", "grille7.json")
+    
+    if os.path.exists(grille_a_charger):
+        succes = model.charger_json(grille_a_charger)
         if succes:
             view.grid_widget.set_grille(model)
-            view.level_label.setText(f"📄 {os.path.basename(grille_defaut)}")
+            view.level_label.setText(f"📄 {os.path.basename(grille_a_charger)}")
             view.size_label.setText(f"📐 {model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
             controller.timer.start(1000)
             controller._mettre_a_jour_boutons_aide()
-            view.statusBar.showMessage(f"Grille de démarrage chargée : {os.path.basename(grille_defaut)}")
+            view.statusBar.showMessage(f"Grille de démarrage chargée : {os.path.basename(grille_a_charger)}")
     else:
         # Tenter de charger un autre fichier si grille7.json n'est pas trouvé
         dossier_exemples = os.path.join(chemin_courant, "grille")
