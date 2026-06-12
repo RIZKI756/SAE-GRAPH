@@ -1,7 +1,7 @@
 import os
 from PyQt6.QtWidgets import QFileDialog, QMessageBox, QApplication
 from PyQt6.QtCore import QTimer
-from model import Grille
+from model import Grille, Case
 from resolver import SolveurSuguru
 
 class GameController:
@@ -77,13 +77,13 @@ class GameController:
                 self._memoriser_derniere_partie(fichier)
                 # Mettre à jour l'affichage
                 self.view.grid_widget.set_grille(self.model)
-                self.view.level_label.setText(f"📄 {os.path.basename(fichier)}")
-                self.view.size_label.setText(f"📐 {self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
+                self.view.level_label.setText(f"{os.path.basename(fichier)}")
+                self.view.size_label.setText(f"{self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
                 
                 # Réinitialiser les indices et le chronomètre
                 self.indices_restants = 3
                 self.temps_ecoule = 0
-                self.view.timer_label.setText("⏱️ 00:00")
+                self.view.timer_label.setText("00:00")
                 self.timer.start(1000)
                 
                 self._mettre_a_jour_boutons_aide()
@@ -247,7 +247,7 @@ class GameController:
             self.view.grid_widget.set_conflits([])
             self.view.grid_widget.update()
             self.temps_ecoule = 0
-            self.view.timer_label.setText("⏱️ 00:00")
+            self.view.timer_label.setText("00:00")
             self.timer.start(1000)
             self.indices_restants = 3
             self._mettre_a_jour_boutons_aide()
@@ -320,7 +320,7 @@ class GameController:
 
     def _mettre_a_jour_chronometre(self):
         self.temps_ecoule += 1
-        self.view.timer_label.setText(f"⏱️ {self._formater_temps(self.temps_ecoule)}")
+        self.view.timer_label.setText(f"{self._formater_temps(self.temps_ecoule)}")
         self._mettre_a_jour_boutons_aide()
 
     def charger_grille_aleatoire(self):
@@ -349,13 +349,13 @@ class GameController:
         if succes:
             self._memoriser_derniere_partie(fichier)
             self.view.grid_widget.set_grille(self.model)
-            self.view.level_label.setText(f"📄 {choix}")
-            self.view.size_label.setText(f"📐 {self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
+            self.view.level_label.setText(f"{choix}")
+            self.view.size_label.setText(f"{self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
             
             # Réinitialiser les indices et le chronomètre
             self.indices_restants = 3
             self.temps_ecoule = 0
-            self.view.timer_label.setText("⏱️ 00:00")
+            self.view.timer_label.setText("00:00")
             self.timer.start(1000)
             
             self._mettre_a_jour_boutons_aide()
