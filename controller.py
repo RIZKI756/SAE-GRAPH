@@ -1,7 +1,7 @@
 import os
 from PyQt6.QtWidgets import QFileDialog, QMessageBox, QApplication
 from PyQt6.QtCore import QTimer
-from model import Grille
+from model import Grille, Case
 from resolver import SolveurSuguru
 
 class GameController:
@@ -77,17 +77,20 @@ class GameController:
                 self._memoriser_derniere_partie(fichier)
                 # Mettre à jour l'affichage
                 self.view.grid_widget.set_grille(self.model)
-                self.view.level_label.setText(f"📄 {os.path.basename(fichier)}")
-                self.view.size_label.setText(f"📐 {self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
+                self.view.level_label.setText(f"{os.path.basename(fichier)}")
+                self.view.size_label.setText(f"{self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
                 
                 # Réinitialiser les indices et le chronomètre
                 self.indices_restants = 3
                 self.temps_ecoule = 0
-                self.view.timer_label.setText("⏱️ 00:00")
+                self.view.timer_label.setText("00:00")
                 self.timer.start(1000)
                 
                 self._mettre_a_jour_boutons_aide()
                 self.view.statusBar.showMessage(f"Grille chargée : {os.path.basename(fichier)}")
+                
+                if os.path.basename(fichier) == "grille6.json":
+                    QMessageBox.warning(self.view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
             else:
                 QMessageBox.critical(self.view, "Erreur de chargement", "Impossible de charger ou d'interpréter le fichier JSON.")
 
@@ -247,7 +250,7 @@ class GameController:
             self.view.grid_widget.set_conflits([])
             self.view.grid_widget.update()
             self.temps_ecoule = 0
-            self.view.timer_label.setText("⏱️ 00:00")
+            self.view.timer_label.setText("00:00")
             self.timer.start(1000)
             self.indices_restants = 3
             self._mettre_a_jour_boutons_aide()
@@ -320,7 +323,7 @@ class GameController:
 
     def _mettre_a_jour_chronometre(self):
         self.temps_ecoule += 1
-        self.view.timer_label.setText(f"⏱️ {self._formater_temps(self.temps_ecoule)}")
+        self.view.timer_label.setText(f"{self._formater_temps(self.temps_ecoule)}")
         self._mettre_a_jour_boutons_aide()
 
     def charger_grille_aleatoire(self):
@@ -331,35 +334,32 @@ class GameController:
             return
 
         fichiers = [f for f in os.listdir(dossier_exemples) if f.endswith(".json")]
-        # On exclut grille6.json car elle est insoluble d'origine
-        fichiers_jouables = [f for f in fichiers if f != "grille6.json"]
-        
-        if not fichiers_jouables:
-            fichiers_jouables = fichiers
-
-        if not fichiers_jouables:
+        if not fichiers:
             self.view.statusBar.showMessage("Aucune grille trouvée.")
             return
 
         import random
-        choix = random.choice(fichiers_jouables)
+        choix = random.choice(fichiers)
         fichier = os.path.join(dossier_exemples, choix)
 
         succes = self.model.charger_json(fichier)
         if succes:
             self._memoriser_derniere_partie(fichier)
             self.view.grid_widget.set_grille(self.model)
-            self.view.level_label.setText(f"📄 {choix}")
-            self.view.size_label.setText(f"📐 {self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
+            self.view.level_label.setText(f"{choix}")
+            self.view.size_label.setText(f"{self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
             
             # Réinitialiser les indices et le chronomètre
             self.indices_restants = 3
             self.temps_ecoule = 0
-            self.view.timer_label.setText("⏱️ 00:00")
+            self.view.timer_label.setText("00:00")
             self.timer.start(1000)
             
             self._mettre_a_jour_boutons_aide()
             self.view.statusBar.showMessage(f"Grille aléatoire chargée : {choix}")
+            
+            if choix == "grille6.json":
+                QMessageBox.warning(self.view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
         else:
             self.view.statusBar.showMessage("Erreur lors du chargement de la grille.")
 
