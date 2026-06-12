@@ -1,7 +1,7 @@
 import os
 from PyQt6.QtWidgets import QFileDialog, QMessageBox, QApplication
 from PyQt6.QtCore import QTimer
-from model import Grille, Case
+from model import Grille
 from resolver import SolveurSuguru
 
 class GameController:
@@ -49,6 +49,15 @@ class GameController:
 
     # --- Actions de jeu ---
 
+    def _memoriser_derniere_partie(self, chemin_fichier):
+        chemin_courant = os.path.dirname(os.path.abspath(__file__))
+        fichier_derniere_partie = os.path.join(chemin_courant, "derniere_partie.txt")
+        try:
+            with open(fichier_derniere_partie, 'w', encoding='utf-8') as f:
+                f.write(chemin_fichier)
+        except Exception:
+            pass
+
     def charger_grille(self):
         # Pop-up pour charger le JSON
         dossier_defaut = os.path.join(os.path.dirname(os.path.abspath(__file__)), "grille")
@@ -65,6 +74,7 @@ class GameController:
         if fichier:
             succes = self.model.charger_json(fichier)
             if succes:
+                self._memoriser_derniere_partie(fichier)
                 # Mettre à jour l'affichage
                 self.view.grid_widget.set_grille(self.model)
                 self.view.level_label.setText(f"📄 {os.path.basename(fichier)}")
@@ -100,6 +110,7 @@ class GameController:
                 fichier += ".json"
             succes = self.model.sauvegarder_json(fichier)
             if succes:
+                self._memoriser_derniere_partie(fichier)
                 self.view.statusBar.showMessage(f"Partie sauvegardée sous {os.path.basename(fichier)}")
             else:
                 QMessageBox.critical(self.view, "Erreur de sauvegarde", "Impossible d'écrire dans le fichier.")
@@ -336,6 +347,7 @@ class GameController:
 
         succes = self.model.charger_json(fichier)
         if succes:
+            self._memoriser_derniere_partie(fichier)
             self.view.grid_widget.set_grille(self.model)
             self.view.level_label.setText(f"📄 {choix}")
             self.view.size_label.setText(f"📐 {self.model.largeur} × {self.model.hauteur} ({len(self.model.motifs)} motifs)")
