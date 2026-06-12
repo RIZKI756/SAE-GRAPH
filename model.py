@@ -97,9 +97,12 @@ class Grille:
                 self.motifs.append(motif)
                 
                 for cellule in cellules:
-                    x, y, val = cellule
-                    # val > 0 signifie que c'est une case pré-remplie
-                    est_initiale = (val > 0)
+                    if len(cellule) == 4:
+                        x, y, val, est_initiale = cellule
+                    else:
+                        x, y, val = cellule
+                        # val > 0 signifie que c'est une case pré-remplie (grille de base)
+                        est_initiale = (val > 0)
                     case = Case(x, y, val, est_initiale)
                     self.cases[(x, y)] = case
                     motif.ajouter_case(case)
@@ -116,7 +119,7 @@ class Grille:
             for motif in self.motifs:
                 data[motif.id] = []
                 for case in motif.cases:
-                    data[motif.id].append([case.col, case.row, case.valeur])
+                    data[motif.id].append([case.col, case.row, case.valeur, case.est_initiale])
 
             with open(chemin_fichier, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=4)
