@@ -82,7 +82,8 @@ class Grille:
             max_row = 0
             for motif_id, cellules in data.items():
                 for cellule in cellules:
-                    x, y, val = cellule
+                    x = cellule[0]
+                    y = cellule[1]
                     if x > max_col:
                         max_col = x
                     if y > max_row:
