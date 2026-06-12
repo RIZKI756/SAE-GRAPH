@@ -267,7 +267,7 @@ class MainWindow(QMainWindow):
     # La fenêtre principale
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Néonaure - Résolution & Jeu (SAÉ Graphes)")
+        self.setWindowTitle("Néonaure - Résolution & Jeu (SAÉ Graphes : Maillard Noaïm, Baelden Tom et Journée Gabriel)")
         self.resize(800, 600)
         self.setStyleSheet(f"""
             QMainWindow {{
@@ -365,7 +365,7 @@ class MainWindow(QMainWindow):
         info_layout.setSpacing(6)
 
         # Affichage du chronomètre (style digital chic)
-        self.timer_label = QLabel("⏱️ 00:00")
+        self.timer_label = QLabel("00:00")
         self.timer_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.timer_label.setStyleSheet(f"""
             font-size: 24px; 
@@ -385,13 +385,13 @@ class MainWindow(QMainWindow):
         info_layout.addWidget(line_sep)
 
         # Détails du niveau (icône + nom de fichier)
-        self.level_label = QLabel("📄 -")
+        self.level_label = QLabel("-")
         self.level_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.level_label.setStyleSheet(f"font-size: 12px; color: {COLOR_TEXT_MUTED}; background: transparent;")
         info_layout.addWidget(self.level_label)
 
         # Détails des dimensions
-        self.size_label = QLabel("📐 -")
+        self.size_label = QLabel("-")
         self.size_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.size_label.setStyleSheet(f"font-size: 12px; color: {COLOR_TEXT_MUTED}; background: transparent;")
         info_layout.addWidget(self.size_label)
