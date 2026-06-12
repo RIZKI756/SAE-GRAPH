@@ -1,8 +1,6 @@
 from model import Grille, Case
 
 class GrapheGrille:
-    # Le graphe pour la grille. Chaque case est un sommet.
-    # Les arêtes relient les cases qui peuvent pas avoir la même valeur.
     def __init__(self, grille: Grille):
         self.grille = grille
         self.sommets = list(grille.cases.values())
@@ -16,10 +14,6 @@ class GrapheGrille:
             self.adj[c2].add(c1)
 
     def construire_graphe(self):
-        # On construit le graphe :
-        # 1. Cases adjacentes reliées
-        # 2. Cases du même motif reliées entre elles
-        # 1. Contrainte d'adjacence physique
         for case in self.sommets:
             voisins = self.grille.get_voisins(case)
             for voisin in voisins:
