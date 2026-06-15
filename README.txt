@@ -57,3 +57,6 @@ Notre `model.py` vérifie strictement :
 2. Règle des voisins : Deux cases voisines (même en diagonale, soit les 8 cases
    autour) ne peuvent JAMAIS contenir le même chiffre.
 
+BAELDEN Tom (TP-B)
+MAILLARD Noaïm (TP-D)
+JOURNEE Gabriel (TP-D)
