@@ -34,8 +34,8 @@ def main():
         succes = model.charger_json(grille_a_charger)
         if succes:
             view.grid_widget.set_grille(model)
-            view.level_label.setText(f"📄 {os.path.basename(grille_a_charger)}")
-            view.size_label.setText(f"📐 {model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
+            view.level_label.setText(f"{os.path.basename(grille_a_charger)}")
+            view.size_label.setText(f"{model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
             controller.timer.start(1000)
             controller._mettre_a_jour_boutons_aide()
             view.statusBar.showMessage(f"Grille de démarrage chargée : {os.path.basename(grille_a_charger)}")
@@ -53,8 +53,8 @@ def main():
                 succes = model.charger_json(grille_alternative)
                 if succes:
                     view.grid_widget.set_grille(model)
-                    view.level_label.setText(f"📄 {os.path.basename(grille_alternative)}")
-                    view.size_label.setText(f"📐 {model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
+                    view.level_label.setText(f"{os.path.basename(grille_alternative)}")
+                    view.size_label.setText(f"{model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
                     controller.timer.start(1000)
                     controller._mettre_a_jour_boutons_aide()
                     view.statusBar.showMessage(f"Grille chargée par défaut : {os.path.basename(grille_alternative)}")
