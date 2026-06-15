@@ -34,15 +34,15 @@ def main():
         succes = model.charger_json(grille_a_charger)
         if succes:
             view.grid_widget.set_grille(model)
-            view.level_label.setText(f"{os.path.basename(grille_a_charger)}")
-            view.size_label.setText(f"{model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
+            view.level_label.setText(f"📄 {os.path.basename(grille_a_charger)}")
+            view.size_label.setText(f"📐 {model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
             controller.timer.start(1000)
             controller._mettre_a_jour_boutons_aide()
             view.statusBar.showMessage(f"Grille de démarrage chargée : {os.path.basename(grille_a_charger)}")
             
-            if os.path.basename(grille_a_charger) == "grille6.json":
-                from PyQt6.QtWidgets import QMessageBox
-                QMessageBox.warning(view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
+            # if os.path.basename(grille_a_charger) == "grille6.json":
+            #     from PyQt6.QtWidgets import QMessageBox
+            #     QMessageBox.warning(view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
     else:
         # Tenter de charger un autre fichier si grille7.json n'est pas trouvé
         dossier_exemples = os.path.join(chemin_courant, "grille")
@@ -53,15 +53,15 @@ def main():
                 succes = model.charger_json(grille_alternative)
                 if succes:
                     view.grid_widget.set_grille(model)
-                    view.level_label.setText(f"{os.path.basename(grille_alternative)}")
-                    view.size_label.setText(f"{model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
+                    view.level_label.setText(f"📄 {os.path.basename(grille_alternative)}")
+                    view.size_label.setText(f"📐 {model.largeur} × {model.hauteur} ({len(model.motifs)} motifs)")
                     controller.timer.start(1000)
                     controller._mettre_a_jour_boutons_aide()
                     view.statusBar.showMessage(f"Grille chargée par défaut : {os.path.basename(grille_alternative)}")
                     
-                    if os.path.basename(grille_alternative) == "grille6.json":
-                        from PyQt6.QtWidgets import QMessageBox
-                        QMessageBox.warning(view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
+                    # if os.path.basename(grille_alternative) == "grille6.json":
+                    #     from PyQt6.QtWidgets import QMessageBox
+                    #     QMessageBox.warning(view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
 
     # Affichage de la fenêtre principale
     view.show()

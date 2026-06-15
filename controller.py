@@ -89,8 +89,8 @@ class GameController:
                 self._mettre_a_jour_boutons_aide()
                 self.view.statusBar.showMessage(f"Grille chargée : {os.path.basename(fichier)}")
                 
-                if os.path.basename(fichier) == "grille6.json":
-                    QMessageBox.warning(self.view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
+                # if os.path.basename(fichier) == "grille6.json":
+                #     QMessageBox.warning(self.view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
             else:
                 QMessageBox.critical(self.view, "Erreur de chargement", "Impossible de charger ou d'interpréter le fichier JSON.")
 
@@ -358,8 +358,8 @@ class GameController:
             self._mettre_a_jour_boutons_aide()
             self.view.statusBar.showMessage(f"Grille aléatoire chargée : {choix}")
             
-            if choix == "grille6.json":
-                QMessageBox.warning(self.view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
+            # if choix == "grille6.json":
+            #     QMessageBox.warning(self.view, "Grille impossible", "Désolé, cette grille ne contient aucune solution")
         else:
             self.view.statusBar.showMessage("Erreur lors du chargement de la grille.")
 
